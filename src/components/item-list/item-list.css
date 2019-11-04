@@ -1,0 +1,13 @@
+.item-list {
+    margin-bottom: 2rem;
+}
+
+.item-list .list-group-item {
+    color:white;
+}
+
+.item-list .list-group-item:hover {
+    background-color: #ffc64e !important;
+    cursor: pointer;
+}
+

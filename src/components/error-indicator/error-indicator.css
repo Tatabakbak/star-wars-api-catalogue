@@ -1,0 +1,12 @@
+.error-indicator {
+    color: #953143;
+    min-height: 176px;
+}
+
+.error-indicator img {
+    margin-bottom: 1rem;
+}
+
+.error-indicator .boom {
+   font-size: 1.7rem;
+}
