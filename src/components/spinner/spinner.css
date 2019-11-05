@@ -56,7 +56,6 @@
 }
 
 .lds-flickr div:nth-child(1) {
-    background: #8dd5c1;
     -webkit-animation: lds-flickr 2.1s linear infinite;
     animation: lds-flickr 2.1s linear infinite;
     -webkit-animation-delay: -1.05s;
@@ -64,7 +63,6 @@
 }
 
 .lds-flickr div:nth-child(2) {
-    background: #54aa92;
     -webkit-animation: lds-flickr 2.1s linear infinite;
     animation: lds-flickr 2.1s linear infinite;
     -webkit-animation-delay: 0s;
@@ -72,7 +70,6 @@
 }
 
 .lds-flickr div:nth-child(3) {
-    background: #8dd5c1;
     -webkit-animation: lds-flickr-opacity 2.1s linear infinite;
     animation: lds-flickr-opacity 2.1s linear infinite;
     -webkit-animation-delay: -1.05s;
