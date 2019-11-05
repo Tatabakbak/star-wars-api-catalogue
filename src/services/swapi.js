@@ -9,10 +9,11 @@ export default class SwapiService {
         return await res.json();
     }
 
-    async getAllPeople() {
-        const people = await this.getResource(`/people/`).results;
-        return people.map(this._transformPerson);
-    }
+    async getAllPeople(){
+        const people = await this.getResource(`/people/`);
+        return people.results.map(this._transformPerson);
+    };
+
 
     async getPerson(id) {
         const person = await this.getResource(`/people/${id}/`);
@@ -62,7 +63,7 @@ export default class SwapiService {
         return url.match(idRegex)[1];
     }
 
-    _transformPlanet(planet) {
+    _transformPlanet = (planet) => {
         //in case of different namings and to restrict received data
         const id = this._extractId(planet.url);
         return {
@@ -73,29 +74,29 @@ export default class SwapiService {
             terrain: planet.terrain,
             diameter: planet.diameter
         }
-    }
+    };
 
-    _transformPerson(person) {
+    _transformPerson = (person) => {
         return {
-            id: this._extractId(person),
+            id: this._extractId(person.url),
             name: person.name,
             gender: person.gender,
-            birthYear: person.birthYear,
-            eyeColor: person.eyeColor
+            birthYear: person.birth_year,
+            eyeColor: person.eye_color
         }
-    }
+    };
 
-    _transformStarship(starship){
+    _transformStarship = (starship) => {
         return {
-            id: this._extractId(starship),
+            id: this._extractId(starship.url),
             name: starship.name,
             model: starship.model,
             manufacturer: starship.manufacturer,
-            costInCredits: starship.costInCredits,
+            costInCredits: starship.cost_in_credits,
             length: starship.length,
             crew: starship.crew,
             passengers: starship.passengers,
-            cargoCapacity: starship.cargoCapacity
+            cargoCapacity: starship.cargo_capacity
         }
-    }
+    };
 }
