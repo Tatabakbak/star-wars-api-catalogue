@@ -1,54 +1,31 @@
-import React, {Component} from 'react';
+import React from 'react';
 import './item-list.css';
-import SwapiService from "../../services/swapi";
-import Spinner from "../spinner/spinner";
+import ErrorButton from "../error-button";
+import ErrorBoundry from "../error-boundry/error-boundry";
 
-export default class ItemList extends Component {
+const ItemList = ({onItemSelected, data, children: renderLabel}) => {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            peopleList: null
-        };
-        this.swapiService = new SwapiService();
-    }
-
-    componentDidMount() {
-        this.swapiService.getAllPeople()
-            .then((itemList) => {
-                this.setState({
-                    itemList
-                })
-            });
-    }
-
-    onItemSelected(id) {
-        this.props.onItemSelected(id);
-    }
-
-    renderItems(arr) {
-        return arr.map(({id, name}) => {
-            return (
-                <li className="list-group-item bg-warning"
-                    key={id}
-                    onClick={() => this.onItemSelected(id)}>
-                    {name}
-                </li>
-            );
-        });
-    }
-
-    render() {
-        const {itemList} = this.state;
-        if (!itemList) {
-            return <Spinner color={this.props.spinnerColor}/>;
-        }
-
+    const items = data.map((item) => {
+        const {id} = item;
+        const label = renderLabel(item);
         return (
-            <ul className="item-list">
-                {this.renderItems(itemList)}
-            </ul>
+            <li className="list-group-item bg-warning"
+                key={id}
+                onClick={() => onItemSelected(id)}>
+                {label}
+            </li>
         );
-    };
+    });
+
+    return (
+        <ErrorBoundry>
+            <ul className="item-list">
+                {items}
+                <ErrorButton/>
+            </ul>
+        </ErrorBoundry>
+    );
+
 };
 
+export default ItemList;

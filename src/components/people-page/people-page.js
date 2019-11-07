@@ -1,43 +1,56 @@
 import React, {Component} from 'react';
 import './people-page.css'
 import ItemList from "../item-list";
-import PersonDetails from "../person-details";
+import ItemDetails from "../item-details";
 import ErrorIndicator from "../error-indicator";
+import SwapiService from "../../services/swapi";
+import Row from "../row";
+import ErrorBoundry from "../error-boundry/error-boundry";
 
 export default class PeoplePage extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            selectedPerson: 3,
+            selectedItem: 3,
             hasError: false
-        }
+        };
+        this.swapiService = new SwapiService();
     }
 
     componentDidCatch(error, errorInfo) {
         this.setState({hasError: true});
     };
 
-    onPersonSelected = (id) => {
-        this.setState({selectedPerson: id});
+    onItemSelected = (id) => {
+        this.setState({selectedItem: id});
     };
 
     render() {
-        const {selectedPerson, hasError} = this.state;
+        const {selectedItem, hasError} = this.state;
 
         if (hasError) {
             return <ErrorIndicator/>
         }
 
+        const itemList = (
+            <ItemList
+                onItemSelected={this.onItemSelected}
+                spinnerColor="yellow"
+                getData={this.swapiService.getAllPeople}>
+                {(item) => `${item.name} (${item.birthYear})`}
+            </ItemList>
+        );
+
+        const itemDetails = (
+            <ErrorBoundry>
+                <ItemDetails itemId={selectedItem}/>
+            </ErrorBoundry>
+        );
+
         return (
-            <div className="row">
-                <div className="col-md-6">
-                    <ItemList onItemSelected={this.onPersonSelected} spinnerColor="yellow"/>
-                </div>
-                <div className="col-md-6">
-                    <PersonDetails personId={selectedPerson}/>
-                </div>
-            </div>
+            <Row left={itemList} right={itemDetails}/>
         );
     }
 }
+
