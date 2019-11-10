@@ -1,6 +1,5 @@
 import React from 'react';
 import './item-list.css';
-import ErrorButton from "../error-button";
 import ErrorBoundry from "../error-boundry/error-boundry";
 
 const ItemList = ({onItemSelected, data, children: renderLabel}) => {
@@ -21,11 +20,10 @@ const ItemList = ({onItemSelected, data, children: renderLabel}) => {
         <ErrorBoundry>
             <ul className="item-list">
                 {items}
-                <ErrorButton/>
+                {/*<ErrorButton/>*/}
             </ul>
         </ErrorBoundry>
     );
-
 };
 
 export default ItemList;
