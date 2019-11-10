@@ -4,8 +4,17 @@ import SwapiService from "../../services/swapi";
 import Spinner from "../spinner/spinner";
 import PlanetView from "./planet-view";
 import ErrorIndicator from "../error-indicator";
+import PropTypes from 'prop-types';
 
 export default class RandomPlanet extends Component {
+
+    static defaultProps = {
+      updateInterval : 1500
+    };
+
+    static propTypes = {
+      updateInterval: PropTypes.number
+    };
 
     constructor(props) {
         super(props);
@@ -32,7 +41,7 @@ export default class RandomPlanet extends Component {
             planet,
             loading: false
         });
-        this.timeout = setTimeout(this.updatePlanet, 1500);
+        this.timeout = setTimeout(this.updatePlanet, this.props.updateInterval);
     };
 
     onError = () => {

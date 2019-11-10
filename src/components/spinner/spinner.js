@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './spinner.css';
 
 const Spinner = ({color}) => {
@@ -38,8 +39,8 @@ Spinner.defaultProps = {
     color: "green"
 };
 
-export default Spinner;
+Spinner.propTypes = {
+    color: PropTypes.oneOf(['green', 'blue', 'yellow'])
+};
 
-//blue
-//#B4E1ED light
-//#4FB7CC dark
+export default Spinner;
