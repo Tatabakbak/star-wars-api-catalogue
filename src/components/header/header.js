@@ -1,7 +1,7 @@
 import React from 'react';
 import './header.css';
 
-const Header = () => {
+const Header = ({onAPIChange}) => {
     return(
 
         <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -21,8 +21,12 @@ const Header = () => {
                     <li className="nav-item">
                         <a className="nav-link" href="./index.js">Starships</a>
                     </li>
-
                 </ul>
+                <button
+                    className="btn btn-secondary btn-sm"
+                    onClick={onAPIChange}>
+                    Change API
+                </button>
             </div>
         </nav>
     );

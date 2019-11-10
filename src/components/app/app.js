@@ -16,15 +16,16 @@ import {
     PlanetDetails,
     StarshipDetails
 } from '../sw-components';
+import DummySwapiService from "../../services/dummy-swapi";
 
 export default class App extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            showRandomPlanet: true
+            showRandomPlanet: true,
+            swapiService: new DummySwapiService()
         };
-        this.swapiService = new SwapiService();
     }
 
     toggleRandomPlanet = () => {
@@ -35,16 +36,27 @@ export default class App extends Component {
         });
     };
 
+    onAPIChange = () => {
+        this.setState(({swapiService}) => {
+            const Service = swapiService instanceof SwapiService ?
+                DummySwapiService :
+                SwapiService;
+            return {
+                swapiService: new Service()
+            }
+        });
+    };
+
     render() {
-        const {showRandomPlanet} = this.state;
+        const {showRandomPlanet, swapiService} = this.state;
 
         const randPlanet = showRandomPlanet ? <RandomPlanet/> : null;
 
         return (
             <ErrorBoundry>
-                <SwapiServiceProvider value={this.swapiService}>
+                <SwapiServiceProvider value={swapiService}>
                     <div>
-                        <Header/>
+                        <Header onAPIChange={this.onAPIChange}/>
                         <div className="page-wrapper">
                             {randPlanet}
                             <button
@@ -53,11 +65,11 @@ export default class App extends Component {
                                 Toggle random planet
                             </button>
                             <ErrorButton/>
-                            <PersonList/>
+                            <PersonList spinnerColor="yellow"/>
                             <PersonDetails itemId={5}/>
-                            <PlanetList/>
+                            <PlanetList spinnerColor="yellow"/>
                             <PlanetDetails itemId={5}/>
-                            <StarshipList/>
+                            <StarshipList spinnerColor="yellow"/>
                             <StarshipDetails itemId={9}/>
                             {/*<ItemList*/}
                             {/*    getData={this.swapiService.getAllStarships}*/}

@@ -14,17 +14,14 @@ export default class ItemDetails extends Component {
         };
     }
 
-    componentDidCatch(error, info) {
-        alert('234');
-    }
-
-
     componentDidMount() {
         this.updateItem();
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevProps.itemId !== this.props.itemId) {
+        if (prevProps.itemId !== this.props.itemId ||
+            prevProps.getData !== this.props.getData ||
+            prevProps.getImageUrl !== this.props.getImageUrl) {
             this.setState({loading: true});
             this.updateItem();
         }
@@ -48,7 +45,7 @@ export default class ItemDetails extends Component {
                         }
                     ),
                 (err) => {
-                     this.setState({hasError: true});
+                    this.setState({hasError: true});
                 });
     };
 
@@ -60,14 +57,13 @@ export default class ItemDetails extends Component {
             throw new Error();
         }
 
-         if (loading) {
-             return <Spinner color='blue'/>;
-         }
-         else {
-             if(!item) {
-                 return <div className="w-100 text-center">Select item from the list</div>;
-             }
-         }
+        if (loading) {
+            return <Spinner color='blue'/>;
+        } else {
+            if (!item) {
+                return <div className="w-100 text-center">Select item from the list</div>;
+            }
+        }
 
         return (
             <div className="item-details card text-white bg-info">
