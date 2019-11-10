@@ -3,8 +3,6 @@ import './spinner.css';
 
 const Spinner = ({color}) => {
 
-    const userColor = color ? color : 'green';
-
     const lightColors = {
         green: '#8dd5c1',
         blue: '#B4E1ED',
@@ -18,11 +16,11 @@ const Spinner = ({color}) => {
     };
 
     const lightStyle = {
-        background: lightColors[userColor]
+        background: lightColors[color]
     };
 
     const darkStyle = {
-        background: darkColors[userColor]
+        background: darkColors[color]
     };
 
     return(
@@ -34,6 +32,10 @@ const Spinner = ({color}) => {
             </div>
         </div>
     );
+};
+
+Spinner.defaultProps = {
+    color: "green"
 };
 
 export default Spinner;
