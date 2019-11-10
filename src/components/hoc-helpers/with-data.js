@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
-import './with-data.css';
 import Spinner from "../spinner/spinner";
 
 //HOC
-const withData = (View, getData) => {
+const withData = (View) => {
 
     return class extends Component {
         constructor(props) {
@@ -14,7 +13,7 @@ const withData = (View, getData) => {
         }
 
         componentDidMount() {
-            getData()
+            this.props.getData()
                 .then((data) => {
                     this.setState({
                         data

@@ -6,7 +6,9 @@ import ErrorButton from "../error-button";
 import SwapiService from "../../services/swapi";
 import Row from "../row";
 import ErrorBoundry from "../error-boundry/error-boundry";
-import{
+import {SwapiServiceProvider} from "../swapi-service-context";
+
+import {
     PersonList,
     PlanetList,
     StarshipList,
@@ -40,73 +42,66 @@ export default class App extends Component {
 
         return (
             <ErrorBoundry>
-                <div>
-                    <Header/>
-                    <div className="page-wrapper">
-                        {randPlanet}
-                        <button
-                            className='btn btn-success toggle-planet-btn'
-                            onClick={this.toggleRandomPlanet}>
-                            Toggle random planet
-                        </button>
-                        <ErrorButton/>
-                        {/*<PeoplePage/>*/}
-                        {/*<Row left={personDetails} right={starshipDetails}/>*/}
+                <SwapiServiceProvider value={this.swapiService}>
+                    <div>
+                        <Header/>
+                        <div className="page-wrapper">
+                            {randPlanet}
+                            <button
+                                className='btn btn-success toggle-planet-btn'
+                                onClick={this.toggleRandomPlanet}>
+                                Toggle random planet
+                            </button>
+                            <ErrorButton/>
+                            <PersonList/>
+                            <PersonDetails itemId={5}/>
+                            <PlanetList/>
+                            <PlanetDetails itemId={5}/>
+                            <StarshipList/>
+                            <StarshipDetails itemId={9}/>
+                            {/*<ItemList*/}
+                            {/*    getData={this.swapiService.getAllStarships}*/}
+                            {/*    onItemSelected={() => {}}>*/}
 
-                        <PersonList>
-                        </PersonList>
-                        <PersonDetails id={5}/>
+                            {/*    { ({name}) => <span>{name}</span> }*/}
+                            {/*</ItemList>*/}
 
+                            {/*<ItemList*/}
+                            {/*    getData={this.swapiService.getAllPlanets}*/}
+                            {/*    onItemSelected={() => {}}>*/}
 
-                        <PlanetList>
-                        </PlanetList>
-                        <PlanetDetails id={5}/>
-                        <StarshipList>
-                        </StarshipList>
+                            {/*    { ({name}) => <span>{name}</span> }*/}
+                            {/*</ItemList>*/}
 
-                        <StarshipDetails id={9}/>
-                        {/*<ItemList*/}
-                        {/*    getData={this.swapiService.getAllStarships}*/}
-                        {/*    onItemSelected={() => {}}>*/}
+                            {/*<div className="row">*/}
+                            {/*    <div className="col-md-6">*/}
+                            {/*        <ItemList*/}
+                            {/*            onItemSelected={this.onPersonSelected}*/}
+                            {/*            getData={this.swapiService.getAllPlanets}*/}
+                            {/*            renderItem={(item) => item.name}*/}
+                            {/*            spinnerColor="yellow"/>*/}
+                            {/*    </div>*/}
+                            {/*    <div className="col-md-6">*/}
+                            {/*        <PersonDetails personId={5}/>*/}
+                            {/*    </div>*/}
+                            {/*</div>*/}
 
-                        {/*    { ({name}) => <span>{name}</span> }*/}
-                        {/*</ItemList>*/}
+                            {/*<div className="row">*/}
+                            {/*    <div className="col-md-6">*/}
+                            {/*        <ItemList*/}
+                            {/*            onItemSelected={this.onPersonSelected}*/}
+                            {/*            getData={this.swapiService.getAllStarships}*/}
+                            {/*            renderItem={(item) => item.name}*/}
+                            {/*            spinnerColor="yellow"/>*/}
+                            {/*    </div>*/}
+                            {/*    <div className="col-md-6">*/}
+                            {/*        <PersonDetails personId={selectedPerson}/>*/}
+                            {/*    </div>*/}
+                            {/*</div>*/}
 
-                        {/*<ItemList*/}
-                        {/*    getData={this.swapiService.getAllPlanets}*/}
-                        {/*    onItemSelected={() => {}}>*/}
-
-                        {/*    { ({name}) => <span>{name}</span> }*/}
-                        {/*</ItemList>*/}
-
-                        {/*<div className="row">*/}
-                        {/*    <div className="col-md-6">*/}
-                        {/*        <ItemList*/}
-                        {/*            onItemSelected={this.onPersonSelected}*/}
-                        {/*            getData={this.swapiService.getAllPlanets}*/}
-                        {/*            renderItem={(item) => item.name}*/}
-                        {/*            spinnerColor="yellow"/>*/}
-                        {/*    </div>*/}
-                        {/*    <div className="col-md-6">*/}
-                        {/*        <PersonDetails personId={5}/>*/}
-                        {/*    </div>*/}
-                        {/*</div>*/}
-
-                        {/*<div className="row">*/}
-                        {/*    <div className="col-md-6">*/}
-                        {/*        <ItemList*/}
-                        {/*            onItemSelected={this.onPersonSelected}*/}
-                        {/*            getData={this.swapiService.getAllStarships}*/}
-                        {/*            renderItem={(item) => item.name}*/}
-                        {/*            spinnerColor="yellow"/>*/}
-                        {/*    </div>*/}
-                        {/*    <div className="col-md-6">*/}
-                        {/*        <PersonDetails personId={selectedPerson}/>*/}
-                        {/*    </div>*/}
-                        {/*</div>*/}
-
+                        </div>
                     </div>
-                </div>
+                </SwapiServiceProvider>
             </ErrorBoundry>
         );
     }
