@@ -6,9 +6,9 @@ import SwapiService from "../../services/swapi";
 import ErrorBoundry from "../error-boundry/error-boundry";
 import {SwapiServiceProvider} from "../swapi-service-context";
 import DummySwapiService from "../../services/dummy-swapi";
-import {BrowserRouter as Router, Route} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
-import {PeoplePage, PlanetsPage, StarshipsPage} from "../pages";
+import {PeoplePage, PlanetsPage, StarshipsPage, LoginPage, SecretPage} from "../pages";
 import {StarshipDetails} from "../sw-components";
 
 export default class App extends Component {
@@ -16,17 +16,13 @@ export default class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            showRandomPlanet: true,
-            swapiService: new SwapiService()
+            swapiService: new SwapiService(),
+            isLoggedIn: false
         };
     }
 
-    toggleRandomPlanet = () => {
-        this.setState((state) => {
-            return {
-                showRandomPlanet: !state.showRandomPlanet
-            }
-        });
+    onLogin = () => {
+        this.setState({isLoggedIn: true});
     };
 
     onAPIChange = () => {
@@ -41,9 +37,7 @@ export default class App extends Component {
     };
 
     render() {
-        const {showRandomPlanet, swapiService} = this.state;
-        const randPlanet = showRandomPlanet ? <RandomPlanet/> : null;
-
+        const {swapiService, isLoggedIn} = this.state;
         return (
             <ErrorBoundry>
                 <SwapiServiceProvider value={swapiService}>
@@ -51,24 +45,28 @@ export default class App extends Component {
                         <div>
                             <Header onAPIChange={this.onAPIChange}/>
                             <div className="page-wrapper">
-                                {randPlanet}
-                                <Route path="/" render={() => <h2>Welcome to StarWars Catalogue</h2>} exact/>
-                                <Route path="/people" component={PeoplePage}/>
-                                <Route path="/planets" component={PlanetsPage}/>
-                                <Route path="/starships" component={StarshipsPage} exact/>
-                                <Route path="/starships/:id"
-                                       render={({match}) => {
-                                           const {id} = match.params;
-                                           return <StarshipDetails itemId={id}/>
-                                       }} exact/>
-
-                                {/*<button*/}
-                                {/*    className='btn btn-success toggle-planet-btn'*/}
-                                {/*    onClick={this.toggleRandomPlanet}>*/}
-                                {/*    Toggle random planet*/}
-                                {/*</button>*/}
-                                {/*<ErrorButton/>*/}
-
+                                <RandomPlanet/>
+                                <Switch>
+                                    <Route path="/" render={() => <h2>Welcome to StarWars Catalogue</h2>} exact/>
+                                    <Route path="/people/:id?" component={PeoplePage}/>
+                                    <Route path="/planets" component={PlanetsPage}/>
+                                    <Route path="/starships" component={StarshipsPage} exact/>
+                                    <Route path="/starships/:id"
+                                           render={({match}) => {
+                                               const {id} = match.params;
+                                               return <StarshipDetails itemId={id}/>
+                                           }}
+                                           exact/>
+                                    <Route
+                                        path="/login"
+                                        render={() => (<LoginPage
+                                            isLoggedIn={isLoggedIn}
+                                            onLogin={this.onLogin}/>)}/>
+                                    <Route
+                                        path="/secret"
+                                        render={() => (<SecretPage isLoggedIn={isLoggedIn}/>)}/>
+                                    <Route render={() => <h2>Page not found</h2>}/>
+                                </Switch>
                             </div>
                         </div>
                     </Router>

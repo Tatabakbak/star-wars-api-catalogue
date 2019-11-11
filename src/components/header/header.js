@@ -21,6 +21,12 @@ const Header = ({onAPIChange}) => {
                     <li className="nav-item">
                         <Link className="nav-link" to="/starships/">Starships</Link>
                     </li>
+                    <li className="nav-item">
+                        <Link className="nav-link" to="/login">Login</Link>
+                    </li>
+                    <li className="nav-item">
+                        <Link className="nav-link" to="/secret">Secret</Link>
+                    </li>
                 </ul>
                 <button
                     className="btn btn-secondary btn-sm"
